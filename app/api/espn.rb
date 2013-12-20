@@ -1,5 +1,5 @@
 class ESPN
-  API_KEY = "hidden"
+  # API_KEY = "your key here"
   NOW_URL = "http://api.espn.com/v1/now?apikey=#{API_KEY}"
 
   def now(&callback)
