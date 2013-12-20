@@ -1,4 +1,5 @@
 class HomeScreen < PM::TableScreen
+  refreshable
   title "Home"
 
   def table_data
@@ -9,6 +10,10 @@ class HomeScreen < PM::TableScreen
   end
 
   def on_load
+    on_refresh
+  end
+
+  def on_refresh
     ESPN.new.now do |response|
       @headlines = response["feed"].map do |f|
         {
@@ -18,6 +23,7 @@ class HomeScreen < PM::TableScreen
         }
       end
       update_table_data
+      stop_refreshing
     end
   end
 
