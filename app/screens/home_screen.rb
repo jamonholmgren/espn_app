@@ -21,7 +21,22 @@ class HomeScreen < PM::TableScreen
     end
   end
 
+  def extract_href(links)
+    while links.is_a?(Hash)
+      if links["href"]
+        links = links["href"]
+      else
+        links = links.values.first # Extract value
+      end
+    end
+    links
+  end
+
   def tap_headline(args={})
-    PM.logger.debug args[:links]
+    link = extract_href(args[:links])
+
+    if link.is_a?(String)
+      UIApplication.sharedApplication.openURL(NSURL.URLWithString(link))
+    end
   end
 end
