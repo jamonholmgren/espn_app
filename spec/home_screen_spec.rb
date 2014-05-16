@@ -36,4 +36,9 @@ describe HomeScreen do
 
     tap view("Test Title")
   end
+
+  it "has a background color of :whitesmoke" do
+    screen.tableView.backgroundColor.should == :whitesmoke.uicolor
+  end
+
 end

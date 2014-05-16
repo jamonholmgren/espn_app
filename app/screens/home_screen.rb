@@ -2,15 +2,18 @@ class HomeScreen < PM::TableScreen
   refreshable
   title "Home"
 
+  def on_load
+    @layout = HomeLayout.new
+    self.tableView = @layout.view
+    
+    on_refresh
+  end
+
   def table_data
     [{
       title: "",
       cells: Array(@headlines)
     }]
-  end
-
-  def on_load
-    on_refresh
   end
 
   def on_refresh

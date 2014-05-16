@@ -82,6 +82,10 @@ GEM
     rb-inotify (0.9.4)
       ffi (>= 0.5.0)
     slop (3.5.0)
+    sugarcube (1.6.1)
+    sweet-kit (0.2.0)
+      motion-kit
+      sugarcube
     thor (0.19.1)
     timers (1.1.0)
     xcodeproj (0.16.1)
@@ -98,3 +102,4 @@ DEPENDENCIES
   motion-kit (~> 0.9)
   motion-stump (~> 0.3.2)
   rake
+  sweet-kit (~> 0.2)
