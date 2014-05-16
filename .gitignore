@@ -16,3 +16,4 @@ nbproject
 .idea
 .dat*.*
 api_key.rb
+.ruby-version

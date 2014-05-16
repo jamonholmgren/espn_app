@@ -7,12 +7,19 @@
 <constant const='true' declared_type='NSString*' name='AFNetworkingOperationFailingURLResponseErrorKey' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingReachabilityDidChangeNotification' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingReachabilityNotificationStatusItem' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidCompleteAssetPathKey' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidCompleteErrorKey' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidCompleteNotification' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidCompleteResponseDataKey' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidCompleteResponseSerializerKey' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidCompleteSerializedResponseKey' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidFinishAssetPathKey' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidFinishErrorKey' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidFinishNotification' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidFinishResponseDataKey' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidFinishResponseSerializerKey' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidFinishSerializedResponseKey' type='@'/>
+<constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidResumeNotification' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidStartNotification' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFNetworkingTaskDidSuspendNotification' type='@'/>
 <constant const='true' declared_type='NSString*' name='AFURLSessionDidInvalidateNotification' type='@'/>
@@ -34,20 +41,20 @@
 <enum name='COCOAPODS_VERSION_MAJOR_AFNetworking_Security' value='2'/>
 <enum name='COCOAPODS_VERSION_MAJOR_AFNetworking_Serialization' value='2'/>
 <enum name='COCOAPODS_VERSION_MAJOR_AFNetworking_UIKit' value='2'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking' value='0'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection' value='0'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession' value='0'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_Reachability' value='0'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_Security' value='0'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_Serialization' value='0'/>
-<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_UIKit' value='0'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking' value='3'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection' value='3'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession' value='3'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_Reachability' value='3'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_Security' value='3'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_Serialization' value='3'/>
-<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_UIKit' value='3'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking' value='1'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_NSURLConnection' value='1'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_NSURLSession' value='1'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_Reachability' value='1'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_Security' value='1'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_Serialization' value='1'/>
+<enum name='COCOAPODS_VERSION_MINOR_AFNetworking_UIKit' value='1'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking' value='0'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_NSURLConnection' value='0'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_NSURLSession' value='0'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_Reachability' value='0'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_Security' value='0'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_Serialization' value='0'/>
+<enum name='COCOAPODS_VERSION_PATCH_AFNetworking_UIKit' value='0'/>
 <function name='AFStringFromNetworkReachabilityStatus'>
 <arg declared_type='AFNetworkReachabilityStatus' name='status' type='i' type64='q'/>
 <retval declared_type='NSString*' type='@'/>
@@ -288,10 +295,28 @@
 </arg>
 <retval declared_type='NSMutableURLRequest*' type='@'/>
 </method>
+<method selector='multipartFormRequestWithMethod:URLString:parameters:constructingBodyWithBlock:error:'>
+<arg declared_type='NSString*' index='0' name='method' type='@'/>
+<arg declared_type='NSString*' index='1' name='URLString' type='@'/>
+<arg declared_type='NSDictionary*' index='2' name='parameters' type='@'/>
+<arg declared_type='void (^)(id)' function_pointer='true' index='3' name='block' type='@?'>
+<arg declared_type='id' type='@'/>
+<retval declared_type='void' type='v'/>
+</arg>
+<arg declared_type='NSError**' index='4' name='error' type='^@'/>
+<retval declared_type='NSMutableURLRequest*' type='@'/>
+</method>
 <method selector='requestWithMethod:URLString:parameters:'>
 <arg declared_type='NSString*' index='0' name='method' type='@'/>
 <arg declared_type='NSString*' index='1' name='URLString' type='@'/>
 <arg declared_type='NSDictionary*' index='2' name='parameters' type='@'/>
+<retval declared_type='NSMutableURLRequest*' type='@'/>
+</method>
+<method selector='requestWithMethod:URLString:parameters:error:'>
+<arg declared_type='NSString*' index='0' name='method' type='@'/>
+<arg declared_type='NSString*' index='1' name='URLString' type='@'/>
+<arg declared_type='NSDictionary*' index='2' name='parameters' type='@'/>
+<arg declared_type='NSError**' index='3' name='error' type='^@'/>
 <retval declared_type='NSMutableURLRequest*' type='@'/>
 </method>
 <method class_method='true' selector='serializer'>
@@ -678,6 +703,11 @@
 <arg declared_type='SecTrustRef' index='0' name='serverTrust' type='^{__SecTrust=}'/>
 <retval declared_type='BOOL' type='B'/>
 </method>
+<method selector='evaluateServerTrust:forDomain:'>
+<arg declared_type='SecTrustRef' index='0' name='serverTrust' type='^{__SecTrust=}'/>
+<arg declared_type='NSString*' index='1' name='domain' type='@'/>
+<retval declared_type='BOOL' type='B'/>
+</method>
 <method selector='pinnedCertificates'>
 <retval declared_type='NSArray*' type='@'/>
 </method>
@@ -696,6 +726,20 @@
 <method selector='setSSLPinningMode:'>
 <arg declared_type='AFSSLPinningMode' index='0' name='SSLPinningMode' type='I' type64='Q'/>
 <retval declared_type='void' type='v'/>
+</method>
+<method selector='setValidatesCertificateChain:'>
+<arg declared_type='BOOL' index='0' name='validatesCertificateChain' type='B'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setValidatesDomainName:'>
+<arg declared_type='BOOL' index='0' name='validatesDomainName' type='B'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='validatesCertificateChain'>
+<retval declared_type='BOOL' type='B'/>
+</method>
+<method selector='validatesDomainName'>
+<retval declared_type='BOOL' type='B'/>
 </method>
 </class>
 <class name='AFURLConnectionOperation'>
@@ -1162,9 +1206,18 @@
 <arg declared_type='NSString*' index='4' name='mimeType' type='@'/>
 <retval declared_type='void' type='v'/>
 </method>
+<method selector='cacheImage:forRequest:'>
+<arg declared_type='UIImage*' index='0' name='image' type='@'/>
+<arg declared_type='NSURLRequest*' index='1' name='request' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='cachedImageForRequest:'>
+<arg declared_type='NSURLRequest*' index='0' name='request' type='@'/>
+<retval declared_type='UIImage*' type='@'/>
+</method>
 <method selector='requestBySerializingRequest:withParameters:error:'>
 <arg declared_type='NSURLRequest*' index='0' name='request' type='@'/>
-<arg declared_type='NSDictionary*' index='1' name='parameters' type='@'/>
+<arg declared_type='id' index='1' name='parameters' type='@'/>
 <arg declared_type='NSError**' index='2' name='error' type='^@'/>
 <retval declared_type='NSURLRequest*' type='@'/>
 </method>
@@ -1313,6 +1366,13 @@
 </arg>
 <retval declared_type='void' type='v'/>
 </method>
+<method class_method='true' selector='setSharedImageCache:'>
+<arg declared_type='id' index='0' name='imageCache' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method class_method='true' selector='sharedImageCache'>
+<retval declared_type='id' type='@'/>
+</method>
 </class>
 <class name='UIProgressView'>
 <method selector='setProgressWithDownloadProgressOfOperation:animated:'>
@@ -1392,6 +1452,17 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<informal_protocol name='AFImageCache'>
+<method selector='cacheImage:forRequest:' type='v16@0:4@8@12' type64='v32@0:8@16@24'>
+<arg declared_type='UIImage*' index='0' name='image' type='@'/>
+<arg declared_type='NSURLRequest*' index='1' name='request' type='@'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='cachedImageForRequest:' type='@12@0:4@8' type64='@24@0:8@16'>
+<arg declared_type='NSURLRequest*' index='0' name='request' type='@'/>
+<retval declared_type='UIImage*' type='@'/>
+</method>
+</informal_protocol>
 <informal_protocol name='AFMultipartFormData'>
 <method selector='appendPartWithFileData:name:fileName:mimeType:' type='v24@0:4@8@12@16@20' type64='v48@0:8@16@24@32@40'>
 <arg declared_type='NSData*' index='0' name='data' type='@'/>
@@ -1441,7 +1512,7 @@
 <informal_protocol name='AFURLRequestSerialization'>
 <method selector='requestBySerializingRequest:withParameters:error:' type='@20@0:4@8@12^@16' type64='@40@0:8@16@24^@32'>
 <arg declared_type='NSURLRequest*' index='0' name='request' type='@'/>
-<arg declared_type='NSDictionary*' index='1' name='parameters' type='@'/>
+<arg declared_type='id' index='1' name='parameters' type='@'/>
 <arg declared_type='NSError**' index='2' name='error' type='^@'/>
 <retval declared_type='NSURLRequest*' type='@'/>
 </method>
