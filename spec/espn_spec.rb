@@ -9,10 +9,24 @@ describe ESPN do
   end
 
   it "can get a response from ESPN now" do
-    @request = @espn.now do |response|
+    @espn.now do |response|
       response.should.be.kind_of(Hash)
       resume
     end
     wait {}
   end
+
+  it "returns a list of well-formatted titles and links" do
+    @espn.news do |articles|
+      articles.should.be.kind_of?(Array)
+      articles.length.should.be > 0
+      articles.first.should.be.kind_of?(Hash)
+      articles.first[:title].should.be.kind_of?(String)
+      articles.first[:title].length.should.be > 0
+      articles.first[:link].should.be.kind_of?(NSURL)
+      resume
+    end
+    wait {}
+  end
+
 end

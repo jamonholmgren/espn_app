@@ -12,24 +12,22 @@ describe HomeScreen do
 
   it "loads headlines" do
     screen.on_load
-    wait 2 do
+    wait 1 do
       screen.table_data.first[:cells].length.should.be > 0
     end
   end
 
   it "opens the link URL when you tap a cell" do
-    links = {
-      "web" => { "href" => "http://www.google.com" }
-    }
-
     stub_table_data = [{
-      cells: [
-        { title: "Test Title", action: :tap_headline, arguments: { links: links } }
-      ]
+      cells: [{ 
+        title: "Test Title", 
+        action: :tap_headline, 
+        arguments: { title: "Test Title", link: "http://www.google.com" }
+      }]
     }]
 
-    UIApplication.sharedApplication.mock! "openURL:" do |url|
-      url.should == NSURL.URLWithString("http://www.google.com")
+    screen.mock!(:open) do |*screens|
+      screens.first.should.be.instance_of?(NewsScreen)
     end
     screen.stub!(:table_data, { return: stub_table_data })
     screen.update_table_data

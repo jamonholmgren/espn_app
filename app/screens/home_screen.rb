@@ -17,12 +17,12 @@ class HomeScreen < PM::TableScreen
   end
 
   def on_refresh
-    ESPN.new.now do |response|
-      @headlines = response["feed"].map do |f|
+    ESPN.new.news do |articles|
+      @headlines = articles.map do |article|
         {
-          title: f["headline"],
+          title: article[:title],
           action: :tap_headline,
-          arguments: { links: f["links"] }
+          arguments: article
         }
       end
       update_table_data
@@ -30,22 +30,7 @@ class HomeScreen < PM::TableScreen
     end
   end
 
-  def extract_href(links)
-    while links.is_a?(Hash)
-      if links["href"]
-        links = links["href"]
-      else
-        links = links.values.first # Extract value
-      end
-    end
-    links
-  end
-
-  def tap_headline(args={})
-    link = extract_href(args[:links])
-
-    if link.is_a?(String)
-      UIApplication.sharedApplication.openURL(NSURL.URLWithString(link))
-    end
+  def tap_headline(args)
+    open NewsScreen.new(news: args)
   end
 end
