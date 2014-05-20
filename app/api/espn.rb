@@ -3,7 +3,7 @@ class ESPN
   NOW_URL = "http://api.espn.com/v1/now?apikey=#{API_KEY}"
 
   def now(&callback)
-    return callback.call @now_data if @now_data
+    return callback.call(@now_data) if @now_data
     AFMotion::JSON.get(NOW_URL) do |result|
       @now_data = result.object
       callback.call @now_data
@@ -11,7 +11,7 @@ class ESPN
   end
 
   def news(&callback)
-    return @news_data if @news_data
+    return callback.call(@news_data) if @news_data
     now do |response|
       @news_data = response["feed"].map do |article|
         format_article article
@@ -43,3 +43,4 @@ class ESPN
   end
 
 end
+

@@ -1,6 +1,6 @@
 *Note: this is a sequel to this post: [http://jamonholmgren.com/building-an-espn-app-using-rubymotion-promotion-and-tdd](http://jamonholmgren.com/building-an-espn-app-using-rubymotion-promotion-and-tdd)*
 
-In the original article, I showed you how to get started with TDD. In this second installment I'm going to flesh out the UI on our app and fix a few things.
+In the original article, I showed you how to get started with TDD. In this second installment I'm going to flesh out the UI on our app and fix a few things with the API feed.
 
 If you've followed along so far, just pick up where you left off. Otherwise, clone [the source](https://github.com/jamonholmgren/espn_app) and check out `article-1`. You'll need to provide your own [ESPN Now API token](http://developer.espn.com/) in `app/api/espn.rb`:
 
@@ -177,7 +177,7 @@ Let's add that method now, plus some helpers. Open up `app/api/espn.rb`.
   # ...
 
   def news(&callback)
-    return @news_data if @news_data
+    return callback.call @news_data if @news_data
     now do |response|
       @news_data = response["feed"].map do |article|
         format_article article
@@ -211,7 +211,7 @@ Let's add that method now, plus some helpers. Open up `app/api/espn.rb`.
 end
 ```
 
-I won't bother going line-by-line on those methods. The private ones are a bit obscure, but you can puzzle it out if you like Ruby code. In the example repo, I've put an example API response in `resources/example_response.rb`, so you can see how I'm extracting that information from the response.
+I won't bother going line-by-line on those methods. The private ones are a bit obscure, but you can puzzle it out if you like Ruby code. In the example repo, I've put an example API response in `spec/espn_mock_response.rb`, so you can see how I'm extracting that information from the response.
 
 Let's also add a little memoization to reduce the number of hits on the API feed. In the `now` method, add a few things:
 
@@ -226,6 +226,45 @@ Let's also add a little memoization to reduce the number of hits on the API feed
 ```
 
 The `@now_data` will short-circuit (sometimes called an "early out") when the data has already been fetched, and the callback will be called instantaneously.
+
+### Mock the ESPN API response
+
+It's gotten to the point where I also want to mock the API response for speed purposes. Here's a gist with the response (excuse the terrible formatting); put it in `spec/espn_mock_response.rb`:
+
+https://gist.github.com/jamonholmgren/481b531d6c8b904e6840
+
+Now modify your `espn_spec.rb` with the following:
+
+```ruby
+  # ...
+
+  before do
+    @espn = ESPN.new
+    @espn.instance_variable_set("@now_data", ESPN_MOCK_RESPONSE)
+  end
+
+  # ...
+```
+
+Also modify your spec, because when we "early-out" for performance reasons the spec has to execute the `resume` on the next tick. We'll use the main process but execute it asynchronously.
+
+```ruby
+  it "returns a list of well-formatted titles and links" do
+    @espn.news do |articles|
+      articles.should.be.kind_of?(Array)
+      articles.length.should.be > 0
+      articles.first.should.be.kind_of?(Hash)
+      articles.first[:title].should.be.kind_of?(String)
+      articles.first[:title].length.should.be > 0
+      articles.first[:link].should.be.kind_of?(NSURL)
+
+      Dispatch::Queue.main.async { resume }
+    end
+    wait {}
+  end
+```
+
+### Simpler table data
 
 Running the tests, I get a nice passing score:
 
@@ -383,6 +422,18 @@ Run them and it should pass. Go ahead and test it yourself too by running `rake`
 
 ![Screen Shot 2014-05-17 at 4,07,23 PM](https://roon-media.s3.amazonaws.com/blogs/16412/0Y1p1f1N3F3v241H0D2T2h3Z0R3x0G2y/giant.png)
 ![Screen Shot 2014-05-17 at 4,06,07 PM](https://roon-media.s3.amazonaws.com/blogs/16412/3G0A2X200k3F2p003i1Q0Z161y312C0D/giant.png)
+
+### Making it look like an ESPN app
+
+ESPN loves dark colors, red, gradiants. Not very iOS 7-like. But we're going to make something that looks like that anyway.
+
+I've made a background for the table. **Don't laugh.** I never claimed to be a designer.
+
+Download the files [here](http://clrsight.co/jh/table_bg.zip) and then extract them into your /resources folder.
+
+Now jump into the `app/layouts/home_layout.rb` file and add this:
+
+
 
 ...to be continued...
 

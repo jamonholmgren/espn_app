@@ -2,6 +2,7 @@ describe ESPN do
   
   before do
     @espn = ESPN.new
+    @espn.instance_variable_set("@now_data", ESPN_MOCK_RESPONSE)
   end
 
   it "is a class" do
@@ -24,7 +25,8 @@ describe ESPN do
       articles.first[:title].should.be.kind_of?(String)
       articles.first[:title].length.should.be > 0
       articles.first[:link].should.be.kind_of?(NSURL)
-      resume
+
+      Dispatch::Queue.main.async { resume }
     end
     wait {}
   end

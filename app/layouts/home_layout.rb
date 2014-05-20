@@ -8,7 +8,7 @@ class HomeLayout < MK::Layout
   protected
 
   def news_ticker_style
-    background_color :whitesmoke.uicolor
+    background_color "table_bg".uiimage.uicolor
   end
 
 end
